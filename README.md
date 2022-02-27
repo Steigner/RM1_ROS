@@ -8,3 +8,4 @@
 <a href="https://github.com/Steigner/RM1_ROS/blob/main/LICENSE"><img alt="License: MIT" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 ![ur3_line_ROS4](https://user-images.githubusercontent.com/54715463/155895009-59160760-a2a1-4902-8dcc-99e4957e6cd5.png)
+![Prezentace1_test356](https://user-images.githubusercontent.com/54715463/155895729-0f2cdbcc-f66c-423e-844f-f2c54e3da60b.jpg)
