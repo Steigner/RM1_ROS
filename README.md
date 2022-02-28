@@ -160,7 +160,7 @@ user@user-pc:~$ sudo chmod a+rw /dev/ttyACM0
 user@user-pc:~$ rosrun robo_control switch.py
 ```
 
-**Python motion script**
+**Python init motion**
 ```console
 user@user-pc:~$ rosrun robo_control motion_robot.py 1
 ```
