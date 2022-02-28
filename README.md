@@ -117,7 +117,7 @@ src
 └───universal_robot
 └───Universal_Robots_ROS_Driver
 │
-Optionaly
+...
 │     
 └───optoforce
 ```
