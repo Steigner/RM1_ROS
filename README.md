@@ -99,6 +99,12 @@ user@user-pc:~$ git clone https://github.com/Steigner/RM1_ROS.git
 ```
 Note: This package **robo_medicinae** should be on the same file system level as **Universal_Robots_ROS_Driver** and **universal_robot** from fmauch.
 
+* Optoforce [=>](https://github.com/shadow-robot/optoforce)
+```console
+user@user-pc:~$ https://github.com/shadow-robot/optoforce.git
+```
+Note: This package **optoforce** should be on the same file system level as **Universal_Robots_ROS_Driver** and **universal_robot** from fmauch. USB communication was used for data acquisition. This is for real world testing.
+
 ## Run
 One bash script from the RM1_Server repository is implemented within the whole application. However, everything can be run in individual terminals:
 
@@ -138,6 +144,16 @@ user@user-pc:~$ roslaunch rosbridge_server rosbridge_websocket.launch
 user@user-pc:~$ rosrun tf2_web_republisher tf2_web_republisher
 ```
 
+**HEX-e sensor publisher**
+```console
+user@user-pc:~$ roslaunch optoforce optoforce.launch
+```
+Note: before run ensure that: 
+
+```console
+user@user-pc:~$ sudo chmod a+rw /dev/ttyACM0
+```
+
 **Python switch**
 ```console
 user@user-pc:~$ rosrun robo_control switch.py
@@ -157,6 +173,8 @@ Note: Script **switch.py** was programmed as main script for control other funct
 * Rosbridge
 * Additionaly TF2 for control_robot page
 * Python switch 
+
+Another simulation option is to use ursim [=>](https://www.universal-robots.com/download)
 
 ## Screenshots and videos
 
