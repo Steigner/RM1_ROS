@@ -65,13 +65,90 @@ After you create a catkin workspace, you must imply the following packages:
 
 * Universal Robots ROS Driver [=>](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver) 
 
-[Do this set up](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver#building)
+```bash
+# source global ros
+$ source /opt/ros/<your_ros_version>/setup.bash
+
+# create a catkin workspace
+$ mkdir -p catkin_ws/src && cd catkin_ws
+
+# clone the driver
+$ git clone https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git src/Universal_Robots_ROS_Driver
+
+# clone fork of the description. This is currently necessary, until the changes are merged upstream.
+$ git clone -b calibration_devel https://github.com/fmauch/universal_robot.git src/fmauch_universal_robot
+
+# install dependencies
+$ sudo apt update -qq
+$ rosdep update
+$ rosdep install --from-paths src --ignore-src -y
+
+# build the workspace
+$ catkin_make
+
+# activate the workspace (ie: source it)
+$ source devel/setup.bash
+```
+<p align="center">
+<a href="https://github.com/Steigner/RM1_ROS/blob/main/LICENSE">https://github.com/UniversalRobots/Universal_Robots_ROS_Driver#building</a>
+</p>
 
 * RM1_ROS [=>](https://github.com/Steigner/RM1_ROS)
 ```console
 user@user-pc:~$ git clone https://github.com/Steigner/RM1_ROS.git
 ```
 Note: This package **robo_medicinae** should be on the same file system level as **Universal_Robots_ROS_Driver** and **universal_robot** from fmauch.
+
+## Run
+One bash script from the RM1_Server repository is implemented within the whole application. However, everything can be run in individual terminals:
+
+**Gazebo sim**
+```console
+user@user-pc:~$ roslaunch robo_platform ur3_bringup.launch
+```
+
+**ROS real-world / ursim controller**
+```console
+user@user-pc:~$ roslaunch robo_platform ur3_driver_bringup.launch robot_ip:=127.0.0.1
+user@user-pc:~$ roslaunch robo_platform ur3_driver_bringup.launch robot_ip:=xxx.xxx.xxx.xxx
+```
+
+**Moveit sim**
+```console
+user@user-pc:~$ roslaunch robo_moveit ur3_moveit_planning_execution.launch sim:=true
+```
+
+**Moveit real-world / ursim**
+```console
+user@user-pc:~$ roslaunch robo_moveit ur3_moveit_planning_execution.launch
+```
+
+**ROS Rviz**
+```console
+user@user-pc:~$ roslaunch robo_moveit moveit_rviz_new.launch config:=true
+```
+
+**ROS Bridge**
+```console
+user@user-pc:~$ roslaunch rosbridge_server rosbridge_websocket.launch
+```
+
+**Tf2 Web republisher**
+```console
+user@user-pc:~$ rosrun tf2_web_republisher tf2_web_republisher
+```
+
+**Python switch**
+```console
+user@user-pc:~$ rosrun robo_control switch.py
+```
+
+**Python motion script**
+```console
+user@user-pc:~$ rosrun robo_control motion_robot.py 1
+user@user-pc:~$ rosrun robo_control motion_robot.py x
+```
+
 
 ## Screenshots and videos
 
