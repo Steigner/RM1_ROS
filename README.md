@@ -107,6 +107,7 @@ Note: This package **optoforce** should be on the same file system level as **Un
 
 ## Run
 One bash script from the RM1_Server repository is implemented within the whole application. However, everything can be run in individual terminals:
+But don't forget that you must also have the **RM1_Server** repository for proper functionality!!! This is just a guide on how to run each part.
 
 **Gazebo sim**
 ```console
@@ -162,7 +163,6 @@ user@user-pc:~$ rosrun robo_control switch.py
 **Python motion script**
 ```console
 user@user-pc:~$ rosrun robo_control motion_robot.py 1
-user@user-pc:~$ rosrun robo_control motion_robot.py x
 ```
 
 Note: Script **switch.py** was programmed as main script for control other function and communicate with client. To run the simulation follow:
