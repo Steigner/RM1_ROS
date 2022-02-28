@@ -116,10 +116,16 @@ src
 └───robo_medicinae
 └───universal_robot
 └───Universal_Robots_ROS_Driver
-│
-...
-│     
+```
+
+**Real world optionaly with Hex-e sensor**
+```
+src
+│   CMakeLists.txt 
 └───optoforce
+└───robo_medicinae
+└───universal_robot
+└───Universal_Robots_ROS_Driver
 ```
 
 ## Run
