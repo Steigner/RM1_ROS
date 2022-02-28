@@ -41,6 +41,9 @@ I decided to go with a solution where ROS will not be included in Docker for dev
 ## ROS
 This application was tested mainly on **ROS Melodic Morenia**, but there is option to use in another distors, but samoe scripts must be changed.
 For run there need to be involved some dependencies to **catkin workspace**, but first install ROS.
+```console
+<rosdistro> = kinetic, melodic, noetic ...
+```
 
 * ROS Melodic Morenia [=>](http://wiki.ros.org/melodic/Installation)
 ```console
