@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="ur3_robot">
+
+  <xacro:include filename="$(find ur_description)/urdf/inc/ur3_macro.xacro"/>
+  <!-- end-effector -->
+  <xacro:include filename="Angular_Gripper_RG2.xacro" />
+  
+  <xacro:include filename="ur3_line.xacro"/>
+
+  <link name="world"/>
+  <joint name="world_joint" type="fixed">
+    <parent link="world"/>
+    <child link="tower"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+<xacro:tower prefix=""/> 
+
+ <joint name="table_joint" type="fixed">
+      <parent link="tower"/>
+      <child link="base_link"/>
+      <origin rpy="0 0 -1.57" xyz="-0.75 -0.5 0.85"/>
+ </joint>
+
+  <xacro:ur3_robot prefix="" />
+<xacro:end_effector prefix="" connected_to="tool0"/>
+</robot>

@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: robo_platform
+    relative_path: urdf/MoveIT_Station.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/ur3_robot.srdf
+  CONFIG:
+    author_name: author
+    author_email: author@author.com
+    generated_timestamp: 1635410926

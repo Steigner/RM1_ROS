@@ -1,0 +1,22 @@
+<launch>
+  <arg name="sim" default="false" />
+  <arg name="debug" default="false" />
+  
+  <!-- Remap follow_joint_trajectory -->
+  <remap if="$(arg sim)" from="/scaled_pos_joint_traj_controller/follow_joint_trajectory" to="/pos_joint_traj_controller/follow_joint_trajectory"/>
+
+  <!-- Launch moveit -->
+  <include file="$(find robo_moveit)/launch/move_group.launch">
+    <arg name="debug" default="$(arg debug)" />
+  </include>
+
+  <group if="$(arg sim)">
+    <arg name="node_start_delay" default="20.0" />
+<!--
+    <node pkg="robo_control" type="reset_robot.py" name="reset_robot" output="screen" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' "/>
+--> 
+  </group>
+
+  <include file="$(find robo_control)/launch/show_result.launch"/>
+
+</launch>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Here we define the 2 parameters of the macro -->
+  <xacro:macro name="tower" params="prefix">
+
+ <link name="${prefix}tower">
+                <visual>
+                    <geometry>
+                        <mesh filename="package://robo_platform/meshes/visual/ur3_line_Gazebo.stl"/>
+                    </geometry>
+                    <material name="">
+                        <color rgba="1.0 1.0 1.0 1.0"/>
+                    </material>
+                </visual>
+                <collision>
+                    <geometry>
+                        <mesh  filename="package://robo_platform/meshes/visual/ur3_line_Gazebo.stl"/>
+                    </geometry>
+                </collision>
+            </link>
+  </xacro:macro>
+</robot>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Here we define the 2 parameters of the macro -->
+  <xacro:macro name="end_effector" params="prefix connected_to">
+    <!-- Create a fixed joint with a parameterized name. -->
+    <joint name="${prefix}end_effector_joint" type="fixed">
+      <!-- The parent link must be read from the robot model it is attached to. -->
+      <parent link="${connected_to}"/>
+      <child link="${prefix}end_effector"/>
+      <!-- The tool is directly attached to the flange. -->
+      <origin rpy="0 0 3.14" xyz="0 0 0"/>
+    </joint>
+    <link name="${prefix}end_effector">
+      <visual>
+        <geometry>
+          <!-- The path to the visual meshes in the package. -->
+          <mesh filename="package://robo_platform/meshes/visual/Gripper_RG2_A_V1.stl"/>
+        </geometry>
+        <material name="${prefix}end_effector">
+           <color rgba="${255/255} ${108/255} ${10/255} 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <!-- The path to the collision meshes in the package. -->
+          <mesh filename="package://robo_platform/meshes/collision/Gripper_RG2_A_V1.stl"/>
+        </geometry>
+        <material name="${prefix}end_effector">
+           <color rgba="${255/255} ${108/255} ${10/255} 1.0"/>
+        </material>
+      </collision>
+    </link>
+
+    <!-- TCP frame -->
+    <joint name="${prefix}tcp_joint" type="fixed">
+      <origin xyz="0 0 0.116" rpy="0 0 0"/>
+      <parent link="${prefix}end_effector"/>
+      <child link="${prefix}tcp"/>
+    </joint>
+    <link name="${prefix}tcp"/>
+
+  </xacro:macro>
+</robot>
