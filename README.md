@@ -108,6 +108,20 @@ user@user-pc:~$ https://github.com/shadow-robot/optoforce.git
 ```
 Note: This package **optoforce** should be on the same file system level as **Universal_Robots_ROS_Driver** and **universal_robot** from fmauch. USB communication was used for data acquisition. This is for real world testing.
 
+## Hierarchy in catkin workaspace
+**Simulation**
+```
+src
+│   CMakeLists.txt  
+└───robo_medicinae
+└───universal_robot
+└───Universal_Robots_ROS_Driver
+│
+Optionaly
+│     
+└───optoforce
+```
+
 ## Run
 One bash script from the RM1_Server repository is implemented within the whole application. However, everything can be run in individual terminals:
 But don't forget that you must also have the **RM1_Server** repository for proper functionality!!! This is just a guide on how to run each part.
