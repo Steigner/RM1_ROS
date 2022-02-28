@@ -149,6 +149,14 @@ user@user-pc:~$ rosrun robo_control motion_robot.py 1
 user@user-pc:~$ rosrun robo_control motion_robot.py x
 ```
 
+Note: Script **switch.py** was programmed as main script for control other function and communicate with client. To run the simulation follow:
+
+* Gazebo
+* Moveit
+* Additionaly Rviz
+* Rosbridge
+* Additionaly TF2 for control_robot page
+* Python switch 
 
 ## Screenshots and videos
 
