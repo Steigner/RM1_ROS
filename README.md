@@ -104,7 +104,7 @@ Note: This package **robo_medicinae** should be on the same file system level as
 
 * Optoforce [=>](https://github.com/shadow-robot/optoforce)
 ```console
-user@user-pc:~$ https://github.com/shadow-robot/optoforce.git
+user@user-pc:~$ git clone https://github.com/shadow-robot/optoforce.git
 ```
 Note: This package **optoforce** should be on the same file system level as **Universal_Robots_ROS_Driver** and **universal_robot** from fmauch. USB communication was used for data acquisition. This is for real world testing.
 
