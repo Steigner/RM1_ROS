@@ -28,7 +28,7 @@ I decided to go with a solution where ROS will not be included in Docker for dev
 | -------------------------- | --------------------------- |
 | Robot                      | Universal Robots UR3        |
 | 3D Camera                  | Intel Realsense D435i       |
-| 2-finfer Gripper           | Optoforce RG2               |
+| 2-finger Gripper           | Optoforce RG2               |
 | Force-Torque Sensor        | Optoforce Hex-e             |
 
 **Robot control**
@@ -37,6 +37,9 @@ I decided to go with a solution where ROS will not be included in Docker for dev
 | -------------------------- | --------------------------- |
 | Control framework          | ROS Melodic                 |
 | Prog. lang.                | Python 2                    |
+
+## Note
+**! Attention !** the problem occurred in rosbridge, which showed an error, for full functionality and unslowed communication it is necessary to make a modification in the file: /opt/ros/<rosdistro>/share/rosbridge_server/launch/rosbridge_websocket.launch. Change "unregister_timeout" [[#138](https://github.com/RobotWebTools/rosbridge_suite/issues/138)]. Example is in file [rosbridge_websocket.launch](https://github.com/Steigner/RM1_ROS/blob/main/rosbridge_websocket.launch).
 
 ## ROS
 This application was tested mainly on **ROS Melodic Morenia**, but there is option to use in another distors, but samoe scripts must be changed.
