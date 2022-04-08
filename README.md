@@ -18,7 +18,7 @@ RM1 is an experimental robotic platform created to automate antigen testing. Thi
 + [<=](https://github.com/Steigner/RM1_server) RM1 - Server
 + [<=](https://github.com/Steigner/RM1_ROS) RM1 - ROS         
 + [<=](https://github.com/Steigner/RM1_Gripper) RM1 - Gripper
-+ RM1 - Seg. ANN
++ [<=](https://github.com/Steigner/RM1_SegCNN) RM1 - SegCNN
 
 I decided to go with a solution where ROS will not be included in Docker for development and simulation. ROS was used as an enabler for simulation and subsequent real world testing. It also made access and updates within development easier. But the resulting real world deploy includes the ability to whitelist ROS Docker into the App, or possibly extracting the simulated robot paths into e.g. the **python-urx library** and with added facilities.
 
@@ -104,7 +104,7 @@ Note: This package **robo_medicinae** should be on the same file system level as
 
 * Optoforce [=>](https://github.com/shadow-robot/optoforce)
 ```console
-user@user-pc:~$ https://github.com/shadow-robot/optoforce.git
+user@user-pc:~$ git clone https://github.com/shadow-robot/optoforce.git
 ```
 Note: This package **optoforce** should be on the same file system level as **Universal_Robots_ROS_Driver** and **universal_robot** from fmauch. USB communication was used for data acquisition. This is for real world testing.
 
