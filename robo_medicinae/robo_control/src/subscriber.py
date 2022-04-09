@@ -9,6 +9,10 @@ import moveit_commander
 # library -> geometry_msgs provides messages for common geometric primitives types
 from geometry_msgs.msg import WrenchStamped
 
+from std_msgs.msg import String
+
+import rospy
+
 
 class save_prev(object):
     prev = None
@@ -26,15 +30,20 @@ class Stop(object):
         wrench.header.frame_id = data.header.frame_id
         wrench.wrench.force.x = data.wrench.force.x
 
-        if save_prev.prev == None:
-            save_prev.prev = WrenchStamped()
-            save_prev.prev.header.frame_id = data.header.frame_id
-            save_prev.prev.wrench.force.x = data.wrench.force.x
-            save_prev.prev.wrench.force.y = data.wrench.force.y
-            save_prev.prev.wrench.force.z = data.wrench.force.z
-            print(save_prev.prev)
+        if data.wrench.force.z < -20:
+            # print(data.wrench.force.z)
+            for i in range(20):
+                self.move_group.stop()
+            
+            pub = rospy.Publisher("info", String, queue_size=10)
 
-        else:
+            r = rospy.Rate(10)  # 10hz
+
+            for i in range(2):
+                pub.publish("emergency")
+                r.sleep()
+
+            """
             if (
                 data.wrench.force.x > save_prev.prev.wrench.force.x + 0.1
                 or data.wrench.force.x < save_prev.prev.wrench.force.x - 0.1
@@ -55,3 +64,7 @@ class Stop(object):
                 print(data.wrench.force.z)
                 for i in range(10):
                     self.move_group.stop()
+            """
+
+if __name__ == "__main__":
+    stop = Stop()

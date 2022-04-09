@@ -432,7 +432,7 @@ class Robot_Motion(object):
         # 0.01 -> static due to z distance from edge of camera
         # 0.0325 -> static due to y distance from edge of camera
         wpose = move_group.get_current_pose().pose
-        wpose.position.z = wpose.position.z - 0.021 - point[1]
+        wpose.position.z = wpose.position.z - 0.0125 - point[1]
         wpose.position.y = wpose.position.y + point[0] - 0.00375
 
         waypoints.append(copy.deepcopy(wpose))
@@ -443,7 +443,8 @@ class Robot_Motion(object):
         move_group.execute(plan, wait=True)
 
     def pos_move_up(self, point):
-        len_stick = 0.098
+        # len_stick = 0.08
+        len_stick = 0.098 - 0.0125
 
         move_group = self.move_group
 
@@ -453,9 +454,10 @@ class Robot_Motion(object):
         waypoints = []
         wpose = move_group.get_current_pose().pose
         wpose.position.z = wpose.position.z + (
-            math.tan((math.pi / 2) - t[0]) * (point[2] - 0.299)
+            # math.tan((math.pi / 2) - t[0]) * (point[2] - 0.299)
+            math.tan((math.pi / 2) - t[0]) * (point[2] - (0.247 + 0.0125) - len_stick)
         )
-        wpose.position.x = wpose.position.x - (point[2] - 0.299)
+        wpose.position.x = wpose.position.x - (point[2] - (0.247 + 0.0125) - len_stick)
         waypoints.append(copy.deepcopy(wpose))
 
         (plan, fraction) = move_group.compute_cartesian_path(
@@ -549,7 +551,8 @@ def rotate_motion():
         # mot.pos_scan()
         rospy.sleep(2)
         mot.remove_box()
-        mot.pos_rotate()
+        # mot.pos_rotate()
+        mot.pos_scan()
 
     except rospy.ROSInterruptException:
         return
@@ -566,10 +569,10 @@ def nostrill_init():
         rospy.sleep(1)
 
         print("[INFO] Waiting for point!")
-        # point = rospy.get_param('point')
+        point = rospy.get_param('point')
 
         # TEST PURPOSE:
-        point = [0.025268396, 0.085912548, 0.50927734]
+        # point = [0.025268396, 0.085912548, 0.50927734]
         # point = [-0.006242857234818595, -0.05785047704265231, 0.43700000643730164]
         print("[INFO] Get point: " + str(point))
 

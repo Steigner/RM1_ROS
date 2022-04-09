@@ -17,7 +17,7 @@ def talker():
     while not rospy.is_shutdown():
         wrench = WrenchStamped()
         wrench.header.frame_id = "Head"
-        wrench.wrench.force.x = 40
+        wrench.wrench.force.z = -40
 
         rospy.loginfo(wrench)
 
