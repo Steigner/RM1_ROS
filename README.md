@@ -28,8 +28,8 @@ I decided to go with a solution where ROS will not be included in Docker for dev
 | -------------------------- | --------------------------- |
 | Robot                      | Universal Robots UR3        |
 | 3D Camera                  | Intel Realsense D435i       |
-| 2-finger Gripper           | Optoforce RG2               |
-| Force-Torque Sensor        | Optoforce Hex-e             |
+| 2-finger Gripper           | Onrobot RG2                 |
+| Force-Torque Sensor        | Onrobot Hex-e               |
 
 **Robot control**
 
