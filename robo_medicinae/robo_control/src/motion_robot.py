@@ -157,10 +157,10 @@ class Robot_Motion(object):
 
     def pos_go_updown(self, mot):
         if mot == "up":
-            direct = 0.2
+            direct = 0.16
 
         elif mot == "drop":
-            direct = -0.1
+            direct = -0.13
 
         else:
             direct = -0.2
