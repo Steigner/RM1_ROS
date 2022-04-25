@@ -215,7 +215,10 @@ Another simulation option is to use ursim [=>](https://www.universal-robots.com/
 
 <p align="center"> <b>Click to full resolution</b> </p>
 
-![ur3_line_ROS4](https://user-images.githubusercontent.com/54715463/155895009-59160760-a2a1-4902-8dcc-99e4957e6cd5.png)
+<img src="docs/Gazebo.jpg">
+<img src="docs/testik.png">
+<img src="docs/C_S_N2.png">
+<img src="docs/ur3_line_ROS4.png">
 
 ## Authors
 
