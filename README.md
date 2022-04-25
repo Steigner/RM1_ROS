@@ -50,6 +50,9 @@ usefull to run Nautilus file manager with sudo:
 user@user-pc:~$ sudo nautilus
 ```
 
+## Hand-Eye-Calibration
+Hand eye calibration was performed according to the repository procedure: https://github.com/lixiny/Handeye-Calibration-ROS. The ArUco board was used as a marker.
+
 ## ROS
 This application was tested mainly on **ROS Melodic Morenia**, but there is option to use in another distors, but samoe scripts must be changed.
 For run there need to be involved some dependencies to **catkin workspace**, but first install ROS.
@@ -212,8 +215,6 @@ Note: Script **switch.py** was programmed as main script for control other funct
 Another simulation option is to use ursim [=>](https://www.universal-robots.com/download)
 
 ## Images
-
-<p align="center"> <b>Click to full resolution</b> </p>
 
 <p align="center">
 <img src="docs/Gazebo.jpg" width="70%">
