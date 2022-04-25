@@ -228,6 +228,11 @@ Another simulation option is to use ursim [=>](https://www.universal-robots.com/
 * Author: Martin Juricek
 * Supervisor: Roman Parak
 
+## Citation
+If you want to quote please check the header repository. 
+
+github.com/Steigner/Robo_Medicinae_I [=>](https://github.com/Steigner/Robo_Medicinae_I) 
+
 ## References
 
 [Faculty of Mechanical Engineering BUT](https://www.fme.vutbr.cz/en)
