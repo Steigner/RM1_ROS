@@ -211,14 +211,16 @@ Note: Script **switch.py** was programmed as main script for control other funct
 
 Another simulation option is to use ursim [=>](https://www.universal-robots.com/download)
 
-## Screenshots and videos
+## Images
 
 <p align="center"> <b>Click to full resolution</b> </p>
 
-<img src="docs/Gazebo.jpg">
-<img src="docs/testik.png">
-<img src="docs/C_S_N2.png">
-<img src="docs/ur3_line_ROS4.png">
+<p align="center">
+<img src="docs/Gazebo.jpg" width="70%">
+<img src="docs/testik.png" width="70%">
+<img src="docs/C_S_N2.png" width="70%">
+<img src="docs/ur3_line_ROS4.png" width="70%">
+</p>
 
 ## Authors
 
