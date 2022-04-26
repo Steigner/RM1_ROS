@@ -5,7 +5,7 @@
 ***
 
 # RoboMedicinae1 - ROS
-<a href="https://github.com/Steigner/RM1_ROS/blob/main/LICENSE"><img alt="License: MIT" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
+<a href="https://github.com/Steigner/RM1_ROS/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/github/license/Steigner/RM1_ROS.svg"></a>
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 **Open-source, copy and modify what you need!**
@@ -229,9 +229,9 @@ Another simulation option is to use ursim [=>](https://www.universal-robots.com/
 * Supervisor: Roman Parak
 
 ## Citation
-If you want to quote please check the header repository. 
+If you want to cite please check the header repository. 
 
-github.com/Steigner/Robo_Medicinae_I [=>](https://github.com/Steigner/Robo_Medicinae_I) 
+github.com/Steigner/Robo_Medicinae_I [=>](https://github.com/Steigner/Robo_Medicinae_I#citation) 
 
 ## References
 
