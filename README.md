@@ -221,7 +221,6 @@ Another simulation option is to use ursim [=>](https://www.universal-robots.com/
 <img src="docs/Gazebo.jpg" width="70%">
 <img src="docs/testik.png" width="70%">
 <img src="docs/C_S_N2.png" width="70%">
-<img src="docs/ur3_line_ROS4.png" width="70%">
 </p>
 
 ## Authors
