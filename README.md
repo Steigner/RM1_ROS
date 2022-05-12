@@ -8,8 +8,6 @@
 <a href="https://github.com/Steigner/RM1_ROS/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/github/license/Steigner/RM1_ROS.svg"></a>
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-## Main - Branch
-
 **Open-source, copy and modify what you need!**
 
 **Open-source, kopírujte a upravujte co potřebujete!**
