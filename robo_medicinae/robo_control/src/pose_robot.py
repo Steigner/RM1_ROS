@@ -12,7 +12,7 @@ import moveit_commander
 # library -> geometry_msgs provides messages for common geometric primitives types
 from geometry_msgs.msg import PoseStamped
 
-
+# simple publish currnet position of robot
 def pub_curr_position(m_group):
     publisher = rospy.Publisher("current_position", PoseStamped, queue_size=10)
     rospy.init_node("POS", anonymous=True)

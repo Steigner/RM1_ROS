@@ -18,11 +18,14 @@ from sensor_msgs.msg import JointState
 
 
 class Robot_Control(object):
+    # Init moveit commander
     def __init__(self):
         moveit_commander.roscpp_initialize(sys.argv)
         rospy.init_node("TESTOS2", anonymous=True)
+        # set up move group
         self.move_group = moveit_commander.MoveGroupCommander("manipulator")
-
+    
+    # function where is get data and then is sent as joint goal
     def go_to_joint(self, data):
         joint_goal = self.move_group.get_current_joint_values()
 
@@ -45,19 +48,23 @@ class Robot_Control(object):
             joint_goal[5] = data.position[0]
         else:
             pass
-
+        
+        # if no wait data is sended from slider
         if "no_wait" in data.name:
             self.move_group.go(joint_goal, wait=False)
             self.move_group.stop()
 
+        # data is sended from arrow
         else:
             self.move_group.go(joint_goal, wait=True)
             self.move_group.stop()
 
+    # function to set up max velocity and acceleration
     def set_accvel(self, data):
         self.move_group.set_max_velocity_scaling_factor(data.data / 100)
         self.move_group.set_max_acceleration_scaling_factor(data.data / 100)
 
+    # subscribe topics
     def listener(self):
         rospy.Subscriber("action_joint_data", JointState, self.go_to_joint)
         rospy.Subscriber("set_vel_acc", Float32, self.set_accvel)

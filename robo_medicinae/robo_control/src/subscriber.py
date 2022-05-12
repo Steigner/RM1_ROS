@@ -9,16 +9,12 @@ import moveit_commander
 # library -> geometry_msgs provides messages for common geometric primitives types
 from geometry_msgs.msg import WrenchStamped
 
+# library -> message types representing primitive data types
 from std_msgs.msg import String
-
-import rospy
-
-
-class save_prev(object):
-    prev = None
 
 
 class Stop(object):
+    # subscribe data from HEX-E sensor
     def __init__(self):
         self.move_group = moveit_commander.MoveGroupCommander("manipulator")
         rospy.init_node("HEX", anonymous=True)
@@ -30,41 +26,19 @@ class Stop(object):
         wrench.header.frame_id = data.header.frame_id
         wrench.wrench.force.x = data.wrench.force.x
 
-        if data.wrench.force.z < -20:
-            # print(data.wrench.force.z)
+        # if Force is less than 5N STOP!
+        if data.wrench.force.z < -5:
             for i in range(20):
                 self.move_group.stop()
             
             pub = rospy.Publisher("info", String, queue_size=10)
 
-            r = rospy.Rate(10)  # 10hz
+            # 10 Hz
+            r = rospy.Rate(10)
 
             for i in range(2):
                 pub.publish("emergency")
                 r.sleep()
-
-            """
-            if (
-                data.wrench.force.x > save_prev.prev.wrench.force.x + 0.1
-                or data.wrench.force.x < save_prev.prev.wrench.force.x - 0.1
-            ):
-                print(data.wrench.force.x)
-                for i in range(10):
-                    self.move_group.stop()
-
-            if (
-                data.wrench.force.y > save_prev.prev.wrench.force.y + 0.05
-                or data.wrench.force.y < save_prev.prev.wrench.force.y - 0.05
-            ):
-                print(data.wrench.force.y)
-                for i in range(10):
-                    self.move_group.stop()
-
-            if data.wrench.force.z > save_prev.prev.wrench.force.z + 0.08:
-                print(data.wrench.force.z)
-                for i in range(10):
-                    self.move_group.stop()
-            """
 
 if __name__ == "__main__":
     stop = Stop()

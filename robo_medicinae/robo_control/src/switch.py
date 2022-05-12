@@ -20,30 +20,37 @@ from rg2 import open_rg2, close_rg2, IP
 
 
 class Switch(object):
+    # init killer var, killer quit subprocess
     def __init__(self):
         self.killer = None
 
+    # init moveit move group
     def init(self):
         self.move_group = moveit_commander.MoveGroupCommander("manipulator")
 
+    # run python motion_robot init_motion()
     def init_mot(self):
         self.start_R2 = subprocess.Popen(
             ["rosrun", "robo_control", "motion_robot.py", "1"]
         )
         self.killer = "init"
 
+    # quit python motion_robot init_motion()
     def init_mot_kill(self):
         self.start_R2.send_signal(signal.SIGINT)
 
+    # run python motion_robot rotate_motion()
     def rotate_mot(self):
         self.start_R2 = subprocess.Popen(
             ["rosrun", "robo_control", "motion_robot.py", "2"]
         )
         self.killer = "rotate"
 
+    # quit python motion_robot rotate_motion()
     def rotate_mot_kill(self):
         self.start_R2.send_signal(signal.SIGINT)
 
+    # run python motion_robot nostril_init() + HEX subscriber
     def init_nostr(self):
         self.start_R3 = subprocess.Popen(
             ["rosrun", "robo_control", "motion_robot.py", "3"]
@@ -51,19 +58,23 @@ class Switch(object):
         self.start_R3_1 = subprocess.Popen(["rosrun", "robo_control", "subscriber.py"])
         self.killer = "nostr"
 
+    # quit python motion_robot nostril_init() + HEX subscriber
     def init_nostr_kill(self):
         self.start_R3.send_signal(signal.SIGINT)
         self.start_R3_1.send_signal(signal.SIGINT)
 
+    # run python control_robot + position publisher
     def con_rob(self):
         self.start_R4 = subprocess.Popen(["rosrun", "robo_control", "control_robot.py"])
         self.start_R5 = subprocess.Popen(["rosrun", "robo_control", "pose_robot.py"])
         self.killer = "control"
 
+    # quit python control_robot + position publisher
     def con_rob_kill(self):
         self.start_R4.send_signal(signal.SIGINT)
         self.start_R5.send_signal(signal.SIGINT)
 
+    # run ur driver or gazebo simulation + moveit
     def connect(self, ip):
         IP.ip = ip
 
@@ -99,16 +110,19 @@ class Switch(object):
             rospy.sleep(10)
             self.init()
 
+    # quit ur driver or gazebo simulation + moveit
     def disconnect(self):
         self.start_R_1.send_signal(signal.SIGINT)
         rospy.sleep(2)
         self.start_R_2.send_signal(signal.SIGINT)
 
+    # emergency stop function
     def emergency_stop(self):
         move_group = self.move_group
         for i in range(10):
             move_group.stop()
 
+    # kill subprocesses
     def kill(self):
         if self.killer == "init":
             self.init_mot_kill()

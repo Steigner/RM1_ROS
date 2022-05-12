@@ -47,23 +47,20 @@ def all_close(goal, actual, tolerance):
 
 class Robot_Motion(object):
     def __init__(self):
+        # init ROS node and moveit commander
         moveit_commander.roscpp_initialize(sys.argv)
-
         rospy.init_node("TESTOS", anonymous=True)
-
         robot = moveit_commander.RobotCommander()
         scene = moveit_commander.PlanningSceneInterface()
         move_group = moveit_commander.MoveGroupCommander("manipulator")
 
+        # init used global vars
         self.box_name = ""
         self.scene = scene
         self.robot = robot
-
         self.move_group = move_group
-
         self.trans = None
         self.rot = None
-
         self.sub = None
 
     # lookupTransform function
@@ -71,8 +68,10 @@ class Robot_Motion(object):
     def get_tf(self, link):
         listener = tf.TransformListener()
 
+        # 10Hz
         rate = rospy.Rate(10.0)
 
+        # get /camera_link tf -> needed to be run file: show_result.launch
         while not rospy.is_shutdown():
             try:
                 (trans, rot) = listener.lookupTransform(
@@ -92,7 +91,7 @@ class Robot_Motion(object):
             ):
                 continue
 
-    # CIRCLE MOTION ATTEMPT ----------------------------------------------------------------------------------
+    # Simple circle motion
     def pos_test(self):
         move_group = self.move_group
         waypoints = []
@@ -107,6 +106,7 @@ class Robot_Motion(object):
         theta = [from_ + x * (to_ - from_) / (size - 1) for x in range(size)]
         r = 0.001
 
+        # linear motion
         for i in range(size):
             wpose.position.y = y_center + r * math.cos(theta[i])
             wpose.position.z = z_center + r * math.sin(theta[i])
@@ -120,8 +120,8 @@ class Robot_Motion(object):
         move_group.execute(plan, wait=True)
         move_group.stop()
 
-    # --------------------------------------------------------------------------------------------------------
-
+    # Get to first position
+    # Calculated positions from CAD models
     def pos_stick_test1(self, pos):
         if pos == "stick":
             x = -0.66
@@ -155,6 +155,7 @@ class Robot_Motion(object):
         current_pose = self.move_group.get_current_pose().pose
         return all_close(pose_goal, current_pose, 0.01)
 
+    # linear motion down
     def pos_go_updown(self, mot):
         if mot == "up":
             direct = 0.16
@@ -181,27 +182,7 @@ class Robot_Motion(object):
         move_group.execute(plan, wait=True)
         move_group.stop()
 
-    def init_motion(self):
-        move_group = self.move_group
-
-        move_group.allow_replanning(True)
-        move_group.allow_looking(True)
-
-        joint_goal = move_group.get_current_joint_values()
-
-        # position pred spilky
-        joint_goal[0] = math.radians(-5)
-        joint_goal[1] = math.radians(-115)
-        joint_goal[2] = math.radians(70)
-        joint_goal[3] = math.radians(315)
-        joint_goal[4] = math.radians(270)
-        joint_goal[5] = math.radians(175)
-        move_group.go(joint_goal, wait=True)
-        move_group.stop()
-
-        current_joints = move_group.get_current_joint_values()
-        return all_close(joint_goal, current_joints, 0.01)
-
+    # scan position, defined by degrees of each joint
     def pos_scan(self):
         move_group = self.move_group
 
@@ -222,6 +203,7 @@ class Robot_Motion(object):
         current_joints = move_group.get_current_joint_values()
         return all_close(joint_goal, current_joints, 0.01)
 
+    # init position, defined by degrees of each joint
     def pos_0(self):
         move_group = self.move_group
         move_group.allow_replanning(True)
@@ -239,6 +221,7 @@ class Robot_Motion(object):
         current_joints = move_group.get_current_joint_values()
         return all_close(joint_goal, current_joints, 0.01)
 
+    # rotate position, client may rotate by +-5 degrees
     def pos_rotate(self):
         def go(data):
 
@@ -254,16 +237,19 @@ class Robot_Motion(object):
             [r, p, y] = tf.transformations.euler_from_quaternion(orint)
 
             if data.data == "up":
+                # defined bounderies
                 if math.degrees(r) > 76:
                     r = math.radians(math.degrees(r) - 5)
 
                 else:
                     pass
-
+            
+            # if stop communicated with topic
             elif data.data == "stop":
                 self.sub.unregister()
 
             elif data.data == "down":
+                # defined bounderies
                 if math.degrees(r) < 126:
                     r = math.radians(math.degrees(r) + 5)
 
@@ -272,8 +258,6 @@ class Robot_Motion(object):
 
             else:
                 pass
-
-            # print(math.degrees(r),math.degrees(p),math.degrees(y))
 
             [x, y, z, w] = tf.transformations.quaternion_from_euler(r, p, y)
 
@@ -294,6 +278,7 @@ class Robot_Motion(object):
             self.sub = rospy.Subscriber("up_down", String, go)
             rospy.spin()
 
+    # Rviz + Moveit add Plane -> Safety feature
     def add_plane(self, timeout=4):
         box_name = self.box_name
         scene = self.scene
@@ -312,6 +297,7 @@ class Robot_Motion(object):
 
         return self.wait_for_state_update(box_is_known=True, timeout=timeout)
 
+    # Add Stick to simulation by approxy dimensions
     def add_stick(self, timeout=4):
         box_name = self.box_name
         scene = self.scene
@@ -380,6 +366,7 @@ class Robot_Motion(object):
             box_is_attached=False, box_is_known=False, timeout=timeout
         )
 
+    # simple publisher, for communication to client if process is done
     def pub(self):
         pub = rospy.Publisher("info", String, queue_size=10)
 
@@ -389,6 +376,7 @@ class Robot_Motion(object):
             pub.publish("done")
             r.sleep()
 
+    # align according to tf of camera
     def pos_align(self):
         move_group = self.move_group
         pose = move_group.get_current_pose().pose
@@ -400,7 +388,6 @@ class Robot_Motion(object):
 
         # auto align
         [x, y, z] = tf.transformations.euler_from_quaternion([t1, t2, t3, t4])
-        # [t1,t2,t3,t4] = tf.transformations.quaternion_from_euler(math.radians(28.91999166117532 + 20), y, z )
 
         [t1, t2, t3, t4] = tf.transformations.quaternion_from_euler(
             x - math.radians(40), y, z
@@ -419,12 +406,8 @@ class Robot_Motion(object):
         plan = move_group.go(wait=True)
         move_group.stop()
 
+    # move center of end effector of UR3 to center of color camera
     def pos_align_move(self, point):
-        # In robot system represented as [y,z,x]
-        # test = [-0.0011257142680031914, -0.040150475558780485, 0.39399999380111694]
-        # test = [ 0.00324, -0.02268,  0.486 ]
-        # test = [0.00121143, -0.03270857,  0.42399999]
-
         move_group = self.move_group
 
         waypoints = []
@@ -442,19 +425,17 @@ class Robot_Motion(object):
         )
         move_group.execute(plan, wait=True)
 
+    # linear move to center of nostril
     def pos_move_up(self, point):
-        # len_stick = 0.08
         len_stick = 0.098 - 0.0125
 
         move_group = self.move_group
 
         t = move_group.get_current_rpy()
-        # print(math.degrees(t[0]), math.degrees(t[1]), math.degrees(t[2]))
 
         waypoints = []
         wpose = move_group.get_current_pose().pose
         wpose.position.z = wpose.position.z + (
-            # math.tan((math.pi / 2) - t[0]) * (point[2] - 0.299)
             math.tan((math.pi / 2) - t[0]) * (point[2] - (0.247 + 0.0125) - len_stick)
         )
         wpose.position.x = wpose.position.x - (point[2] - (0.247 + 0.0125) - len_stick)
@@ -466,6 +447,7 @@ class Robot_Motion(object):
 
         move_group.execute(plan, wait=True)
 
+    # linear move back from center of nostril
     def pos_move_down(self, point):
         move_group = self.move_group
         t = move_group.get_current_rpy()
@@ -548,11 +530,10 @@ def rotate_motion():
         print("           STARTING PROCESS: ROTATE                       ")
         print("----------------------------------------------------------")
         mot = Robot_Motion()
-        # mot.pos_scan()
+        mot.pos_scan()
         rospy.sleep(2)
         mot.remove_box()
-        # mot.pos_rotate()
-        mot.pos_scan()
+        mot.pos_rotate()
 
     except rospy.ROSInterruptException:
         return
