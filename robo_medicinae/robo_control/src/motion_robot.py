@@ -412,10 +412,10 @@ class Robot_Motion(object):
 
         waypoints = []
 
-        # 0.01 -> static due to z distance from edge of camera
-        # 0.0325 -> static due to y distance from edge of camera
+        # 0.0247 -> static due to z distance from edge of camera
+        # 0.00375 -> static due to y distance from edge of camera
         wpose = move_group.get_current_pose().pose
-        wpose.position.z = wpose.position.z - 0.0125 - point[1]
+        wpose.position.z = wpose.position.z - 0.0247 - point[1]
         wpose.position.y = wpose.position.y + point[0] - 0.00375
 
         waypoints.append(copy.deepcopy(wpose))
@@ -427,7 +427,7 @@ class Robot_Motion(object):
 
     # linear move to center of nostril
     def pos_move_up(self, point):
-        len_stick = 0.098 - 0.0125
+        len_stick = 0.05
 
         move_group = self.move_group
 
@@ -436,9 +436,9 @@ class Robot_Motion(object):
         waypoints = []
         wpose = move_group.get_current_pose().pose
         wpose.position.z = wpose.position.z + (
-            math.tan((math.pi / 2) - t[0]) * (point[2] - (0.247 + 0.0125) - len_stick)
+            math.tan((math.pi / 2) - t[0]) * (point[2] - 0.247 - len_stick)
         )
-        wpose.position.x = wpose.position.x - (point[2] - (0.247 + 0.0125) - len_stick)
+        wpose.position.x = wpose.position.x - (point[2] - 0.247 - len_stick)
         waypoints.append(copy.deepcopy(wpose))
 
         (plan, fraction) = move_group.compute_cartesian_path(
@@ -548,13 +548,13 @@ def nostrill_init():
         mot = Robot_Motion()
 
         rospy.sleep(1)
+        
+        # Real-world
+        # print("[INFO] Waiting for point!")
+        # point = rospy.get_param('point')
 
-        print("[INFO] Waiting for point!")
-        point = rospy.get_param('point')
-
-        # TEST PURPOSE:
-        # point = [0.025268396, 0.085912548, 0.50927734]
-        # point = [-0.006242857234818595, -0.05785047704265231, 0.43700000643730164]
+        # TEST SIM PURPOSE:
+        point = [0.025268396, 0.085912548, 0.50927734]
         print("[INFO] Get point: " + str(point))
 
         # for testing process
@@ -575,6 +575,7 @@ def nostrill_init():
 
         mot.pos_move_down(point)
         mot.pos_scan()
+
         print("[INFO] Reached position SCAN!")
 
         mot.pos_0()
